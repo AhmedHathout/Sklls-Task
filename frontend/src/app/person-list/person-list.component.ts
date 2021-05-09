@@ -10,6 +10,7 @@ import { PersonService } from '../person.service';
 })
 export class PersonListComponent implements OnInit {
   public persons: Person[] = [];
+  public allPersons: Person[] = [];
 
   constructor(private personService: PersonService) {}
 
@@ -20,7 +21,8 @@ export class PersonListComponent implements OnInit {
   public getPersonsByLocation(location: string): void {
     this.personService.getPersonsByLocation(location).subscribe(
       (response: Person[]) => {
-        this.persons = response;
+        this.allPersons = response;
+        this.persons = this.allPersons;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -30,15 +32,15 @@ export class PersonListComponent implements OnInit {
 
   public filterPersonsByLocation(location: string): void {
     const results: Person[] = [];
-    for (const person of this.persons) {
+    for (const person of this.allPersons) {
       if (person.location.toLowerCase().trim().indexOf(location.toLowerCase()) !== -1) { // I think it is better this way without trim
         results.push(person);
       }
     }
 
     this.persons = results;
-    if (!location) {
-      this.getPersonsByLocation('');
+    if (!location) { // If the location is empty, it will reset the persons list.
+      this.persons = this.allPersons;
     }
   }
 }

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PersonService {
-  private apiServerUrl = environment.apiBaseUrl;
+  private apiServerUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

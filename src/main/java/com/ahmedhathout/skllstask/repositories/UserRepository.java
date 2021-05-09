@@ -15,10 +15,6 @@ public interface UserRepository extends CrudRepository<User, Long>, UserDetailsS
 
     @Override
     default UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Delete print
-        System.out.println("username=" + username);
-        UserDetails userDetails = findUserByEmail(username.toLowerCase().trim()).orElseThrow(() -> {System.out.println("ssssssssssss"); return new UsernameNotFoundException(username);});
-        System.out.println("userDetails=" + userDetails);
-        return userDetails;
+        return findUserByEmail(username.toLowerCase().trim()).orElseThrow(() -> new UsernameNotFoundException(username));
     }
 }

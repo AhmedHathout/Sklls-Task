@@ -1,9 +1,7 @@
 package com.ahmedhathout.skllstask.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
 import org.springframework.data.annotation.Id;
@@ -25,9 +23,9 @@ import java.util.HashSet;
 @Builder
 @Data
 @Entity(name = "user_") // user is reserved in postgres
+@JsonIgnoreProperties("password")
 public class User implements UserDetails {     // By Convention, UserDetails Implementation should be a different class but I do not think that there is a need for that now at least.
 
-    // TODO Why two ids
     @javax.persistence.Id
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -39,6 +37,7 @@ public class User implements UserDetails {     // By Convention, UserDetails Imp
     private String email;
 
     @NotEmpty
+    @ToString.Exclude
     private String password;
 
     @NotEmpty

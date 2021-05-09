@@ -5,14 +5,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PersonService } from './person.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { PersonListComponent } from './person-list/person-list.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { LoginComponent } from './login/login.component';
+import { BasicAuthInterceptor, ErrorInterceptor } from './_herlpers';
 
 @NgModule({
   declarations: [
-    AppComponent, TopBarComponent, PersonListComponent
+    AppComponent, TopBarComponent, PersonListComponent, LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +25,9 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 
     RouterModule.forRoot([{ path: '', component: PersonListComponent }])
   ],
-  providers: [PersonService],
+  providers: [PersonService,
+    { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

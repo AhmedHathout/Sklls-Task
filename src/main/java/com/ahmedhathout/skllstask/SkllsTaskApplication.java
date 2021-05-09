@@ -11,12 +11,10 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class SkllsTaskApplication {
-    // TODO Fix User Authentication
     public static void main(String[] args) {
         SpringApplication.run(SkllsTaskApplication.class, args);
     }
 
-    // TODO Check if this weakens security
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
